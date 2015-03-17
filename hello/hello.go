@@ -1,12 +1,9 @@
 package main
 
-import "fmt"
+import "github.com/hdvegasilva/greeting"
 
 func main() {
 
-	var message string = "Hello Go World!"
-
-	var greeting *string = &message
-
-	fmt.Printf(*greeting)
+	var s = greeting.Salutation{"Bob", "Hello"}
+	greeting.Greet(s, greeting.CreatePrintCustom("?"), true, 5)
 }
