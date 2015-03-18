@@ -8,12 +8,33 @@ type Salutation struct {
 	Greeting string
 }
 
+// Renamable is an exported type.
+type Renamable interface {
+	Rename(newName string)
+}
+
+// Rename is an exported function.
+func (salutation *Salutation) Rename(newName string) {
+	salutation.Name = newName
+}
+
+func (salutation *Salutation) Write(p []byte) (n int, err error) {
+	s := string(p)
+	salutation.Rename(s)
+	n = len(s)
+	err = nil
+	return
+}
+
+// Salutations is an exported type.
+type Salutations []Salutation
+
 // Printer is an exported type.
 type Printer func(string)
 
 // Greet is an exported function.
-func Greet(salutation []Salutation, do Printer, isFormal bool, times int) {
-	for _, s := range salutation {
+func (salutations Salutations) Greet(do Printer, isFormal bool, times int) {
+	for _, s := range salutations {
 		message, alternate := CreateMessage(s.Name, s.Greeting)
 		if prefix := GetPrefix(s.Name); isFormal {
 			do(prefix + message)
@@ -25,18 +46,24 @@ func Greet(salutation []Salutation, do Printer, isFormal bool, times int) {
 
 // GetPrefix is an exported function.
 func GetPrefix(name string) (prefix string) {
-	switch {
-	case name == "Bob":
-		prefix = "Mr. "
-	case name == "Joe", name == "Amy", len(name) == 10:
-		prefix = "Dr. "
-	case name == "Mary":
-		prefix = "Mrs. "
-	default:
-		prefix = "Dude "
+	prefixMap := map[string]string{
+		"Bob":  "Mr. ",
+		"Joe":  "Dr. ",
+		"Amy":  "Dr. ",
+		"Mary": "Mrs. ",
 	}
 
-	return
+	prefixMap["Joe"] = "Jr "
+
+	if _, exists := prefixMap["Mary"]; exists {
+		delete(prefixMap, "Mary")
+	}
+
+	if value, exists := prefixMap[name]; exists {
+		return value
+	}
+
+	return "Dude "
 }
 
 // TypeSwitchTest is an exported function.
