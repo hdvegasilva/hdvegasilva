@@ -3,7 +3,7 @@ package drum
 import (
 	"encoding/hex"
 	//"encoding/json"
-	//"fmt"
+	"fmt"
 	"io/ioutil"
 	//"strings"
 )
@@ -39,7 +39,7 @@ func DecodeFile(path string) (*Pattern, error) {
 	} else {
 		fmt.Println(decodedData)
 	}*/
-
+	fmt.Println(hex.EncodeToString(data))
 	//p := &Pattern{s}
 	//p := data
 	p := &Pattern{hex.Dump(data)}

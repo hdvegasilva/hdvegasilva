@@ -22,7 +22,20 @@ hex(instrument-snare)
 hex(instrument-clap)
 | 00-00-00-00 | 01-00-01-00 | 00-00-00-00 | 00-00-00-00 |
 
+03 00 00 00 07
 
+hex(instrument-hh-open)
+| 00-00-01-00 | 00-00-01-00 | 01-00-01-00 | 00-00-01-00 |
+
+04 00 00 00 08
+
+hex(instrument-hh-close)
+| 01-00-00-00 | 01-00-00-00 | 00-00-00-00 | 01-00-00-01 |
+
+05 00 00 00 07
+
+hex(instrument-cowbell)
+| 00-00-00-00 | 00-00-00-00 | 00-00-01-00 | 00-00-00-00 |
 */
 
 func TestDecodeFile(t *testing.T) {
@@ -41,16 +54,16 @@ Tempo: 120
 (5) cowbell	|----|----|--x-|----|
 `,
 		},
-		/*{"pattern_2.splice",
-					`Saved with HW Version: 0.808-alpha
+		{"pattern_2.splice",
+			`Saved with HW Version: 0.808-alpha
 		Tempo: 98.4
 		(0) kick	|x---|----|x---|----|
 		(1) snare	|----|x---|----|x---|
 		(3) hh-open	|--x-|--x-|x-x-|--x-|
 		(5) cowbell	|----|----|x---|----|
 		`,
-				},
-				{"pattern_3.splice",
+		},
+		/*{"pattern_3.splice",
 					`Saved with HW Version: 0.808-alpha
 		Tempo: 118
 		(40) kick	|x---|----|x---|----|
